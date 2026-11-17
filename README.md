@@ -26,19 +26,11 @@ The objective is to provide personalized movie recommendations by analyzing movi
 
 ## 🎯 Objectives
 
-✔ Build a Content-Based Recommendation Engine
-
-✔ Process and analyze movie metadata
-
-✔ Perform Natural Language Processing (NLP)
-
-✔ Extract meaningful movie features
-
-✔ Calculate movie similarity using Cosine Similarity
-
-✔ Recommend movies based on user preferences
-
-✔ Evaluate recommendation quality
+✔ Clean and merge multi-table movie metadata 
+✔ Parse nested JSON strings for genres, cast, crew, and keywords  
+✔ Normalize text tags and apply **TF-IDF Vectorization**  
+✔ Compute a **Cosine Similarity** matrix to rank similar films  
+✔ Solve the cold-start recommendation problem for new or unrated titles  
 
 ---
 
@@ -74,7 +66,7 @@ The objective is to provide personalized movie recommendations by analyzing movi
 
 **Dataset:** The Movies Dataset
 
-**Source:** https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
+**Source:** [Kaggle Movies Dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
 
 ### Dataset Files
 
@@ -132,31 +124,25 @@ The objective is to provide personalized movie recommendations by analyzing movi
 ## 🔄 Project Workflow
 
 ```text
-Movie Dataset
-      │
-      ▼
-Data Cleaning
-      │
-      ▼
-Merge Metadata Files
-      │
-      ▼
-Feature Extraction
-      │
-      ▼
-Text Preprocessing (NLP)
-      │
-      ▼
+Movie Metadata Files
+        │
+        ▼
+Data Cleaning & Metadata Merging
+        │
+        ▼
+JSON Parsing (Genres, Keywords, Cast, Director)
+        │
+        ▼
+Text Normalization & Tag Soup Creation
+        │
+        ▼
 TF-IDF Vectorization
-      │
-      ▼
+        │
+        ▼
 Cosine Similarity Matrix
-      │
-      ▼
-Recommendation Engine
-      │
-      ▼
-Movie Recommendations
+        │
+        ▼
+Top-N Movie Recommendations
 ```
 
 ---
@@ -199,21 +185,13 @@ Converts textual movie information into numerical feature vectors for similarity
 
 ---
 
-## 📊 Feature Engineering
+## 📊 Feature Engineering & Example Output
 
-Combined movie metadata into a single feature set including:
+Combined cleaned metadata attributes into a unified text representation (e.g., `Action Adventure Sci-Fi ChristopherNolan LeonardoDiCaprio Space Dream Technology`) before vectorizing with TF-IDF.
 
-- Genres
-- Keywords
-- Cast Members
-- Directors
-- Movie Overview
+- **Sample Input:** `Interstellar`
+- **Top 5 Recommendations:** `1. Inception` • `2. The Martian` • `3. Gravity` • `4. Arrival` • `5. Contact`
 
-Example:
-
-```text
-Action Adventure Sci-Fi ChristopherNolan
-LeonardoDiCaprio Space Dream Technology
 ```
 
 ---
@@ -273,64 +251,49 @@ Evaluation Metrics:
 
 ## 💡 Key Insights
 
-- Movie genres significantly influence recommendation quality.
-- Cast and director information improve recommendation relevance.
-- TF-IDF effectively captures movie content characteristics.
-- Content-based filtering performs well for cold-start recommendations.
-- Combining metadata sources improves recommendation accuracy.
+- **Metadata Synergy:** Combining director, top-billed cast, and thematic keywords alongside genres produces noticeably tighter recommendations than genre matching alone.
+- **Name Tokenization:** Stripping spaces from cast and director names (e.g., `ChristopherNolan`) prevents unrelated matches on common first names.
+- **Cold-Start Advantage:** Content-based filtering reliably recommends niche or newly released movies even when user rating history is sparse.
 
 ---
 
 ## 📁 Repository Structure
 
+
 ```text
 Movie-Recommendation-System/
 │
 ├── Data/
-│   ├── credits.csv
 │   ├── keywords.csv
 │   ├── links.csv
 │   ├── links_small.csv
-│   ├── movies_metadata.csv
-│   ├── ratings.csv
+│   ├── movies_metadata.csv.gz
 │   └── ratings_small.csv
 │
 ├── Notebook/
 │   └── Movie_Recommendation_System.ipynb
 │
-├── Model/
-│   ├── similarity.pkl
-│   └── movies.pkl
-│
-├── Pics/
+├── pics/
 │   ├── recommendation-dashboard.png
 │   ├── similarity-matrix.png
 │   ├── recommendations.png
 │   └── metadata-analysis.png
 │
-├── README.md
-├── LICENSE
-├── requirements.txt
-└── .gitignore
+└── README.md
 ```
 
 ---
 
 ## 🚀 Future Improvements
 
-- Collaborative Filtering
-- Hybrid Recommendation System
-- Deep Learning Recommendations
-- User Profile-Based Recommendations
-- Streamlit Web Application
-- Real-Time Movie Suggestions
+- Hybrid recommendation system combining Collaborative Filtering (SVD) with Content-Based Filtering
+- Semantic embeddings using Sentence-BERT / Transformers
+- Interactive movie search web app deployed via Streamlit
 
 ---
 
 ## 👨‍💻 Author
 
-**Munavar Patter**
-
-Aspiring Data Scientist
-
+**Munavar Patter**  
+M.Sc. Student at SRH University | Former Data Analyst  
 Python • Pandas • NLP • Scikit-Learn • Machine Learning • SQL
